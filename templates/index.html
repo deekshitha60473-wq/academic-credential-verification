@@ -1,0 +1,543 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SecureCert | Academic Credential Verification</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #eef2ff,
+                #f5f3ff,
+                #ecfeff
+            );
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .logo span {
+            color: #06b6d4;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            width: 90%;
+            max-width: 1100px;
+            margin: 70px auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #64748b;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .primary {
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+            color: white;
+        }
+
+        .primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(79,70,229,0.3);
+        }
+
+        .secondary {
+            background: white;
+            color: #4f46e5;
+            border: 2px solid #4f46e5;
+        }
+
+        .secondary:hover {
+            background: #eef2ff;
+            transform: translateY(-3px);
+        }
+
+
+        /* SECURITY CARD */
+
+        .hero-card {
+            flex: 0.7;
+            background: linear-gradient(
+                145deg,
+                #4f46e5,
+                #7c3aed,
+                #06b6d4
+            );
+            border-radius: 25px;
+            padding: 35px;
+            color: white;
+            box-shadow: 0 20px 40px rgba(79,70,229,0.25);
+        }
+
+        .shield {
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+        .hero-card h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .hero-card p {
+            color: #eef2ff;
+            line-height: 1.6;
+        }
+
+
+        /* FEATURES */
+
+        .features {
+            width: 90%;
+            max-width: 1100px;
+            margin: 60px auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 35px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                3,
+                1fr
+            );
+            gap: 25px;
+        }
+
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-7px);
+        }
+
+        .icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .feature p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+
+        /* DASHBOARD CARD */
+
+        .dashboard-section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto 80px;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+
+        .dashboard-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .dashboard-section p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            background: #111827;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .buttons {
+                justify-content: center;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-card {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        Secure<span>Cert</span>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/issue">
+            Issue
+        </a>
+
+        <a href="/verify">
+            Verify
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-text">
+
+        <div class="badge">
+            🔐 Secure Digital Credentials
+        </div>
+
+        <h1>
+            Verify Academic
+            <span>Credentials</span>
+            Instantly
+        </h1>
+
+        <p>
+            A secure digital platform for issuing,
+            verifying and managing academic
+            certificates with QR codes,
+            cryptographic hashes and digital
+            signatures.
+        </p>
+
+
+        <div class="buttons">
+
+            <a
+                href="/issue"
+                class="btn primary"
+            >
+                🎓 Issue Credential
+            </a>
+
+            <a
+                href="/verify"
+                class="btn secondary"
+            >
+                🔍 Verify Credential
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="shield">
+            🛡️
+        </div>
+
+        <h2>
+            Secure & Tamper Resistant
+        </h2>
+
+        <p>
+            Every credential can be protected
+            using cryptographic hashing and
+            issuer digital signatures to help
+            detect unauthorized modifications.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="features">
+
+    <h2>
+        Why SecureCert?
+    </h2>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature">
+
+            <div class="icon">
+                🔐
+            </div>
+
+            <h3>
+                Digital Signatures
+            </h3>
+
+            <p>
+                Credentials are digitally signed
+                by the authorized issuer so
+                verification can detect
+                unauthorized changes.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="icon">
+                📱
+            </div>
+
+            <h3>
+                QR Verification
+            </h3>
+
+            <p>
+                Scan the credential QR code
+                to quickly open the online
+                verification page.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="icon">
+                🛡️
+            </div>
+
+            <h3>
+                Anti-Fraud Protection
+            </h3>
+
+            <p>
+                Cryptographic verification
+                helps identify credentials
+                whose protected data has
+                been modified.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section class="dashboard-section">
+
+    <h2>
+        📊 Credential Management
+    </h2>
+
+    <p>
+        View and manage issued academic
+        credentials from the dashboard.
+    </p>
+
+    <a
+        href="/dashboard"
+        class="btn primary"
+    >
+        Open Dashboard
+    </a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        <strong>SecureCert</strong>
+        © 2026
+    </p>
+
+    <p>
+        Digital Academic Credential
+        Verification System
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
+```

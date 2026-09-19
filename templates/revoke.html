@@ -1,0 +1,59 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Revoke Credential</title>
+
+</head>
+
+<body>
+
+    <h1>Revoke Credential</h1>
+
+    <form method="POST">
+
+        <label>Credential ID:</label>
+
+        <input
+            type="text"
+            name="credential_id"
+            placeholder="Enter Credential ID"
+            required
+        >
+
+        <button type="submit">
+            Revoke Credential
+        </button>
+
+    </form>
+
+
+    {% if result == "revoked" %}
+
+        <h2>Credential Revoked Successfully ❌</h2>
+
+        <p>
+            Credential ID:
+            {{ credential["credential_id"] }}
+        </p>
+
+
+    {% elif result == "not_found" %}
+
+        <h2>Credential Not Found ❌</h2>
+
+    {% endif %}
+
+
+    <br>
+
+    <a href="/">
+        ← Back to Home
+    </a>
+
+</body>
+
+</html>
+```

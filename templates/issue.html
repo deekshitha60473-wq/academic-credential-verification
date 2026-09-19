@@ -1,0 +1,813 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SecureCert | Issue Credential</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff,
+                    #ecfeff
+                );
+
+            color: #172033;
+        }
+
+
+        /* NAVBAR */
+
+        nav {
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: white;
+
+            box-shadow:
+                0 2px 15px rgba(0,0,0,0.08);
+        }
+
+
+        .logo {
+            font-size: 25px;
+
+            font-weight: bold;
+
+            color: #4f46e5;
+        }
+
+
+        .logo span {
+            color: #06b6d4;
+        }
+
+
+        .nav-links {
+            display: flex;
+
+            gap: 25px;
+        }
+
+
+        .nav-links a {
+            text-decoration: none;
+
+            color: #374151;
+
+            font-weight: bold;
+        }
+
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+
+        /* MAIN */
+
+        .page {
+            width: 90%;
+
+            max-width: 850px;
+
+            margin: 45px auto 70px;
+        }
+
+
+        .heading {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .heading .icon {
+            font-size: 50px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .heading h1 {
+            font-size: 38px;
+
+            margin-bottom: 10px;
+
+            color: #1e1b4b;
+        }
+
+
+        .heading p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* FORM CARD */
+
+        .card {
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 40px rgba(79,70,229,0.12);
+        }
+
+
+        .security-banner {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 16px;
+
+            margin-bottom: 25px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #ecfeff
+                );
+
+            border: 1px solid #c7d2fe;
+        }
+
+
+        .security-icon {
+            font-size: 30px;
+        }
+
+
+        .security-banner strong {
+            color: #4338ca;
+        }
+
+
+        .security-banner p {
+            margin-top: 4px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* FORM */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+        }
+
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+
+        label {
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #374151;
+        }
+
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            background: #f8fafc;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus {
+            outline: none;
+
+            border-color: #6366f1;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    99,
+                    102,
+                    241,
+                    0.12
+                );
+        }
+
+
+        .photo-box {
+            padding: 18px;
+
+            border: 2px dashed #a5b4fc;
+
+            border-radius: 12px;
+
+            background: #f8faff;
+        }
+
+
+        .photo-box input {
+            background: white;
+
+            border: 1px solid #cbd5e1;
+        }
+
+
+        .photo-note {
+            margin-top: 7px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* BUTTON */
+
+        button {
+            width: 100%;
+
+            margin-top: 30px;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 8px 20px rgba(
+                    79,
+                    70,
+                    229,
+                    0.25
+                );
+        }
+
+
+        button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 25px rgba(
+                    79,
+                    70,
+                    229,
+                    0.35
+                );
+        }
+
+
+        /* INFO */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+
+        .info {
+            text-align: center;
+
+            padding: 18px;
+
+            background: #f8fafc;
+
+            border-radius: 12px;
+        }
+
+
+        .info-icon {
+            font-size: 27px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .info strong {
+            display: block;
+
+            font-size: 14px;
+
+            color: #334155;
+        }
+
+
+        .info span {
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 12px;
+
+            color: #64748b;
+        }
+
+
+        /* BACK */
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #4f46e5;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .back:hover {
+            color: #7c3aed;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            background: #111827;
+
+            color: #cbd5e1;
+
+            margin-top: 50px;
+        }
+
+
+        footer strong {
+            color: white;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        Secure<span>Cert</span>
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/issue">
+            Issue
+        </a>
+
+        <a href="/verify">
+            Verify
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- PAGE -->
+
+<div class="page">
+
+
+    <div class="heading">
+
+        <div class="icon">
+            🎓
+        </div>
+
+        <h1>
+            Issue Academic Credential
+        </h1>
+
+        <p>
+            Create a secure, digitally signed
+            academic credential.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <!-- SECURITY MESSAGE -->
+
+        <div class="security-banner">
+
+            <div class="security-icon">
+                🔐
+            </div>
+
+            <div>
+
+                <strong>
+                    Secure Credential Generation
+                </strong>
+
+                <p>
+                    Your credential will be protected
+                    using cryptographic hashing,
+                    QR verification and a digital signature.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+            method="POST"
+            action="{{ url_for('issue_credential') }}"
+            enctype="multipart/form-data"
+        >
+
+
+            <div class="form-grid">
+
+
+                <!-- STUDENT NAME -->
+
+                <div class="form-group">
+
+                    <label for="student_name">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="student_name"
+                        name="student_name"
+                        placeholder="Enter student name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- STUDENT ID -->
+
+                <div class="form-group">
+
+                    <label for="student_id">
+                        Student ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="student_id"
+                        name="student_id"
+                        placeholder="Enter student ID"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- COURSE -->
+
+                <div class="form-group">
+
+                    <label for="course">
+                        Course
+                    </label>
+
+                    <input
+                        type="text"
+                        id="course"
+                        name="course"
+                        placeholder="e.g. B.Tech Computer Science"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- INSTITUTION -->
+
+                <div class="form-group">
+
+                    <label for="institution">
+                        Institution
+                    </label>
+
+                    <input
+                        type="text"
+                        id="institution"
+                        name="institution"
+                        placeholder="Enter institution name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- YEAR -->
+
+                <div class="form-group">
+
+                    <label for="year">
+                        Graduation Year
+                    </label>
+
+                    <input
+                        type="text"
+                        id="year"
+                        name="year"
+                        placeholder="2026"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CERTIFICATE -->
+
+                <div class="form-group">
+
+                    <label for="certificate_number">
+                        Certificate Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="certificate_number"
+                        name="certificate_number"
+                        placeholder="Enter certificate number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHOTO -->
+
+                <div class="form-group full">
+
+                    <label for="photo">
+                        Passport Size Photo
+                    </label>
+
+                    <div class="photo-box">
+
+                        <input
+                            type="file"
+                            id="photo"
+                            name="photo"
+                            accept=".jpg,.jpeg,.png"
+                            required
+                        >
+
+                        <div class="photo-note">
+
+                            📷 Upload JPG, JPEG or PNG image.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <button type="submit">
+
+                🔐 Generate Secure Credential
+
+            </button>
+
+
+        </form>
+
+
+        <!-- SECURITY FEATURES -->
+
+        <div class="info-grid">
+
+
+            <div class="info">
+
+                <div class="info-icon">
+                    🔑
+                </div>
+
+                <strong>
+                    Digital Signature
+                </strong>
+
+                <span>
+                    Issuer authentication
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="info-icon">
+                    #️⃣
+                </div>
+
+                <strong>
+                    SHA-256 Hash
+                </strong>
+
+                <span>
+                    Data integrity
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="info-icon">
+                    📱
+                </div>
+
+                <strong>
+                    QR Verification
+                </strong>
+
+                <span>
+                    Instant verification
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <a
+        class="back"
+        href="{{ url_for('home') }}"
+    >
+
+        ← Back to Home
+
+    </a>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <strong>
+        SecureCert
+    </strong>
+
+    © 2026 — Digital Academic Credential
+    Verification System
+
+</footer>
+
+
+</body>
+
+</html>
+```

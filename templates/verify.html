@@ -1,0 +1,964 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SecureCert | Verify Credential</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff,
+                    #ecfeff
+                );
+
+            color: #172033;
+
+            padding-bottom: 50px;
+        }
+
+
+        /* NAVBAR */
+
+        nav {
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: white;
+
+            box-shadow:
+                0 2px 15px rgba(0,0,0,0.08);
+        }
+
+
+        .logo {
+            font-size: 25px;
+
+            font-weight: bold;
+
+            color: #4f46e5;
+        }
+
+
+        .logo span {
+            color: #06b6d4;
+        }
+
+
+        .nav-links {
+            display: flex;
+
+            gap: 25px;
+        }
+
+
+        .nav-links a {
+            text-decoration: none;
+
+            color: #374151;
+
+            font-weight: bold;
+        }
+
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+
+            max-width: 800px;
+
+            margin: 45px auto;
+        }
+
+
+        .heading {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .verify-icon {
+            font-size: 55px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .heading h1 {
+            font-size: 36px;
+
+            color: #1e1b4b;
+
+            margin-bottom: 10px;
+        }
+
+
+        .heading p {
+            color: #64748b;
+
+            line-height: 1.6;
+        }
+
+
+        /* FORM CARD */
+
+        .verify-card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 40px rgba(
+                    79,
+                    70,
+                    229,
+                    0.12
+                );
+        }
+
+
+        .security-banner {
+            display: flex;
+
+            gap: 15px;
+
+            align-items: center;
+
+            padding: 17px;
+
+            margin-bottom: 25px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #ecfeff
+                );
+
+            border: 1px solid #c7d2fe;
+        }
+
+
+        .security-banner-icon {
+            font-size: 32px;
+        }
+
+
+        .security-banner strong {
+            color: #4338ca;
+        }
+
+
+        .security-banner p {
+            margin-top: 4px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* FORM */
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            color: #374151;
+
+            margin-bottom: 8px;
+        }
+
+
+        .input-row {
+            display: flex;
+
+            gap: 12px;
+        }
+
+
+        input {
+            flex: 1;
+
+            padding: 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            background: #f8fafc;
+        }
+
+
+        input:focus {
+            outline: none;
+
+            border-color: #6366f1;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    99,
+                    102,
+                    241,
+                    0.12
+                );
+        }
+
+
+        button {
+            padding: 14px 25px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-weight: bold;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(
+                    79,
+                    70,
+                    229,
+                    0.3
+                );
+        }
+
+
+        /* RESULTS */
+
+        .result {
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border-radius: 16px;
+        }
+
+
+        .valid {
+            background: #f0fdf4;
+
+            border: 2px solid #4ade80;
+        }
+
+
+        .fake {
+            background: #fff1f2;
+
+            border: 2px solid #fb7185;
+        }
+
+
+        .revoked {
+            background: #fff7ed;
+
+            border: 2px solid #fb923c;
+        }
+
+
+        .not-found {
+            background: #fef2f2;
+
+            border: 2px solid #f87171;
+        }
+
+
+        .result h2 {
+            margin-bottom: 20px;
+        }
+
+
+        .valid h2 {
+            color: #15803d;
+        }
+
+
+        .fake h2 {
+            color: #be123c;
+        }
+
+
+        .revoked h2 {
+            color: #c2410c;
+        }
+
+
+        .not-found h2 {
+            color: #b91c1c;
+        }
+
+
+        /* SECURITY BOX */
+
+        .security {
+            padding: 18px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+
+            line-height: 1.6;
+
+            box-shadow:
+                0 4px 12px rgba(
+                    0,
+                    0,
+                    0,
+                    0.05
+                );
+        }
+
+
+        .valid .security {
+            color: #166534;
+
+            border-left: 5px solid #22c55e;
+        }
+
+
+        .fake .security {
+            color: #9f1239;
+
+            border-left: 5px solid #ef4444;
+        }
+
+
+        /* DETAILS */
+
+        .details {
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 12px;
+        }
+
+
+        .details p {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 11px 0;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .details p:last-child {
+            border-bottom: none;
+        }
+
+
+        .details strong {
+            color: #475569;
+        }
+
+
+        .details p:not(strong) {
+            color: #172033;
+        }
+
+
+        /* STATUS */
+
+        .status-badge {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+
+        /* BACK */
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #4f46e5;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .back:hover {
+            color: #7c3aed;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            margin-top: 40px;
+
+            padding: 25px;
+
+            background: #111827;
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+        }
+
+
+        footer strong {
+            color: white;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .verify-card {
+                padding: 22px;
+            }
+
+            .details p {
+                flex-direction: column;
+
+                gap: 4px;
+            }
+
+            .heading h1 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        Secure<span>Cert</span>
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/issue">
+            Issue
+        </a>
+
+        <a href="/verify">
+            Verify
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="heading">
+
+        <div class="verify-icon">
+            🔍
+        </div>
+
+        <h1>
+            Verify Academic Credential
+        </h1>
+
+        <p>
+            Check whether an academic credential
+            is authentic, revoked or tampered with.
+        </p>
+
+    </div>
+
+
+    <div class="verify-card">
+
+
+        <!-- SECURITY MESSAGE -->
+
+        <div class="security-banner">
+
+            <div class="security-banner-icon">
+                🛡️
+            </div>
+
+            <div>
+
+                <strong>
+                    Secure Verification
+                </strong>
+
+                <p>
+                    The credential can be checked
+                    against its stored security data
+                    and digital signature.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+            method="POST"
+            action="{{ url_for('verify_credential') }}"
+        >
+
+            <label for="credential_id">
+                Credential ID
+            </label>
+
+
+            <div class="input-row">
+
+                <input
+                    type="text"
+                    id="credential_id"
+                    name="credential_id"
+                    placeholder="CRED-XXXXXXXXXX"
+                    value="{{ credential_id or '' }}"
+                    required
+                >
+
+
+                <button type="submit">
+                    🔍 Verify
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- AUTHENTIC -->
+
+        {% if result == "valid" %}
+
+        <div class="result valid">
+
+            <h2>
+                ✓ AUTHENTIC CREDENTIAL
+            </h2>
+
+
+            <div class="security">
+
+                <strong>
+                    🔐 Digital Signature:
+                </strong>
+
+                VERIFIED ✓
+
+                <br><br>
+
+                This credential was digitally signed
+                by the authorized issuer.
+
+            </div>
+
+
+            <div class="details">
+
+
+                <p>
+                    <strong>
+                        Credential ID
+                    </strong>
+
+                    <span>
+                        {{ credential["credential_id"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Student Name
+                    </strong>
+
+                    <span>
+                        {{ credential["student_name"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Student ID
+                    </strong>
+
+                    <span>
+                        {{ credential["student_id"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Course
+                    </strong>
+
+                    <span>
+                        {{ credential["course"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Institution
+                    </strong>
+
+                    <span>
+                        {{ credential["institution"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Graduation Year
+                    </strong>
+
+                    <span>
+                        {{ credential["year"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Certificate Number
+                    </strong>
+
+                    <span>
+                        {{ credential["certificate_number"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Status
+                    </strong>
+
+                    <span class="status-badge">
+                        {{ credential["status"] }}
+                    </span>
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- FAKE -->
+
+        {% elif result == "fake" %}
+
+        <div class="result fake">
+
+            <h2>
+                ✗ FAKE / TAMPERED CREDENTIAL
+            </h2>
+
+
+            <div class="security">
+
+                <strong>
+                    🔐 Digital Signature:
+                </strong>
+
+                FAILED ✗
+
+                <br><br>
+
+                The digital signature could not be
+                verified.
+
+                <br><br>
+
+                The credential may have been modified
+                or was not issued using the authorized
+                issuer's private key.
+
+            </div>
+
+
+            {% if credential %}
+
+            <div class="details">
+
+                <p>
+                    <strong>
+                        Credential ID
+                    </strong>
+
+                    <span>
+                        {{ credential["credential_id"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Student Name
+                    </strong>
+
+                    <span>
+                        {{ credential["student_name"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    <strong>
+                        Status
+                    </strong>
+
+                    <span>
+                        {{ credential["status"] }}
+                    </span>
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- REVOKED -->
+
+        {% elif result == "revoked" %}
+
+        <div class="result revoked">
+
+            <h2>
+                ⚠ CREDENTIAL REVOKED
+            </h2>
+
+
+            <div class="details">
+
+                <p>
+                    <strong>
+                        Credential ID
+                    </strong>
+
+                    <span>
+                        {{ credential["credential_id"] }}
+                    </span>
+                </p>
+
+
+                <p>
+                    This credential has been
+                    revoked and is no longer valid.
+                </p>
+
+
+                <p>
+                    <strong>
+                        Status
+                    </strong>
+
+                    <span>
+                        {{ credential["status"] }}
+                    </span>
+                </p>
+
+
+                {% if signature_valid %}
+
+                <p>
+                    <strong>
+                        Digital Signature
+                    </strong>
+
+                    <span>
+                        VERIFIED ✓
+                    </span>
+                </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- NOT FOUND -->
+
+        {% elif result == "not_found" %}
+
+        <div class="result not-found">
+
+            <h2>
+                ✗ CREDENTIAL NOT FOUND
+            </h2>
+
+            <p>
+                No credential was found for:
+            </p>
+
+            <br>
+
+            <strong>
+                {{ credential_id }}
+            </strong>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <a
+        class="back"
+        href="{{ url_for('home') }}"
+    >
+
+        ← Back to Home
+
+    </a>
+
+
+</div>
+
+
+<footer>
+
+    <strong>
+        SecureCert
+    </strong>
+
+    © 2026 — Digital Academic Credential
+    Verification System
+
+</footer>
+
+
+</body>
+
+</html>
+```
